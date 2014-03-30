@@ -132,7 +132,11 @@ module Sprockets
           else
             logger.info "Writing #{target}"
             asset.write_to target
-            asset.write_to "#{target}.gz" if asset.is_a?(BundledAsset)
+
+            extensions = %w{.svg}
+            if asset.is_a?(BundledAsset) || extensions.include?(File.extname(target))
+              asset.write_to "#{target}.gz"
+            end
           end
 
         end
